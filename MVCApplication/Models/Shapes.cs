@@ -9,13 +9,13 @@ namespace MVCApplication.Models
     public class Shape
     {
         public string Name { get; set; }
+        public double Sidelength { get; set; }
 
 
-
-        public Shape(string name)
+        public Shape(string name, double sidelength)
         {
             Name = name;
-
+            Sidelength = sidelength;
         }
 
     }
@@ -23,14 +23,9 @@ namespace MVCApplication.Models
     public class Cube: Shape
     {
 
-        public double Sidelength { get; set; } 
 
-
-        public Cube(string Name, double sidelength) : base(Name)
-        {
-            Sidelength = sidelength;
-
-        }
+        public Cube(string Name, double Sidelength) : base(Name, Sidelength) { }
+       
 
         public double Volume(double Sidelength)
         {
@@ -54,30 +49,18 @@ namespace MVCApplication.Models
     public class Square: Shape
     {
 
-        public double Sidelength { get; set; }
 
-
-
-        public Square(string Name, double sidelength) : base(Name)
-        {
-            Sidelength = sidelength;
-
-        }
+        public Square(string Name, double Sidelength) : base(Name, Sidelength) { }
+      
 
     }
 
-    public class Segment: Shape
+    public class Segment : Shape
     {
 
-        public double Sidelength { get; set; }
-
-
-
-        public Segment(string Name, double sidelength) : base(Name)
-        {
-            Sidelength = sidelength;
-
-        }
+        public Segment(string Name, double Sidelength) : base(Name, Sidelength) { }
 
     }
-}
+
+
+    }

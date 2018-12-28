@@ -12,6 +12,8 @@ namespace MVCApplication.Controllers
   
     public class HomeController : Controller
     {
+        public static List<Shape> TheList = new List<Shape>();
+
         public IActionResult Index()
         {
             IndexViewModel indexViewModel = new IndexViewModel();
@@ -41,14 +43,18 @@ namespace MVCApplication.Controllers
             if (ModelState.IsValid)
             {
 
-                Cube qbert = new Cube("qbert", resultViewModel.Sidelength);
+                Cube Cube = new Cube("Cube", resultViewModel.Sidelength);
 
-                resultViewModel.Volume = qbert.Volume(resultViewModel.Sidelength);
-                resultViewModel.Surfacearea = qbert.Surfacearea(resultViewModel.Sidelength);
+                resultViewModel.Volume = Cube.Volume(resultViewModel.Sidelength);
+                resultViewModel.Surfacearea = Cube.Surfacearea(resultViewModel.Sidelength);
+
+                TheList.Add(Cube);
+
+                resultViewModel.Shapelist = TheList;
 
                 return View(resultViewModel);
 
-
+                
             }
 
 

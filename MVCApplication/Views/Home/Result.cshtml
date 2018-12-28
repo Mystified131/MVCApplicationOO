@@ -26,5 +26,13 @@
 
 <br />
 
+<h4>List Of Shapes:</h4>
+@foreach (var shape in Model.Shapelist)
+{
+
+<p>@shape.Name : @shape.Sidelength</p>
+
+}
+
 <p>@Model.Error</p><br />
 
