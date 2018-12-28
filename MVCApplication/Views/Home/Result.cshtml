@@ -1,0 +1,30 @@
+﻿@model MVCApplication.ViewModels.ResultViewModel
+
+@{
+    ViewData["Title"] = "Result";
+}
+
+<h2>Result</h2>
+
+<br />
+
+@if (@Model.Volume != 0)
+{
+
+    <p>The volume of the cube would be: @Model.Volume</p>
+
+}
+
+<br />
+
+@if (@Model.Surfacearea != 0)
+{
+
+    <p>The surface area of the cube would be: @Model.Surfacearea</p>
+
+}
+
+<br />
+
+<p>@Model.Error</p><br />
+
