@@ -14,9 +14,11 @@ namespace MVCApplication.Controllers
     {
         public static List<Shape> TheList = new List<Shape>();
         public static List<Shape> Remlist = new List<Shape>();
+        public static List<Shape> Editlist = new List<Shape>();
+        public static double Bridgeelement;
         public static string Searchstr;
-        public static string Bridgeelement;
         public static string remname;
+        public static string editname;
 
         public IActionResult Index()
         {
@@ -181,6 +183,189 @@ namespace MVCApplication.Controllers
                 TheList.RemoveAll(x => x.Name == remname & x.Sidelength == removeItemViewModel.NewElement2);
 
                 return Redirect("/Home/Result");
+            }
+
+            return Redirect("/Home/Error");
+
+        }
+
+        [HttpGet]
+        public IActionResult EditSelect()
+        {
+            if (TheList.Count > 0)
+            {
+                EditSelectViewModel editSelectViewModel = new EditSelectViewModel();
+
+                editSelectViewModel.TheList = TheList;
+
+                return View(editSelectViewModel);
+            }
+
+            else
+            {
+                return Redirect("/");
+            }
+        }
+
+
+        [HttpPost]
+        public IActionResult EditSelect(EditSelectViewModel editSelectViewModel)
+        {
+
+            if (ModelState.IsValid)
+            {
+                List<string> Shapenames = new List<string>();
+
+                foreach (Shape item in TheList)
+                {
+
+                    Shapenames.Add(item.Name);
+
+                }
+
+                if (Shapenames.Contains(editSelectViewModel.NewElement1))
+                {
+
+                    foreach (Shape item in TheList)
+                    {
+                        if (item.Name == editSelectViewModel.NewElement1)
+                        {
+
+                            Editlist.Add(item);
+
+                        }
+
+
+                    }
+
+                    editname = editSelectViewModel.NewElement1;
+
+                    return Redirect("/Home/EditSelect2");
+                }
+
+                return Redirect("/Home/Error");
+
+            }
+
+            return Redirect("/Home/Error");
+
+        }
+
+        [HttpGet]
+        public IActionResult EditSelect2()
+        {
+            if (TheList.Count > 0)
+            {
+                EditSelect2ViewModel editSelect2ViewModel = new EditSelect2ViewModel();
+
+                editSelect2ViewModel.Editlist = Editlist;
+
+                return View(editSelect2ViewModel);
+
+            }
+
+            else
+
+            {
+                return Redirect("/");
+            }
+        }
+
+
+        [HttpPost]
+        public IActionResult EditSelect2(EditSelect2ViewModel editSelect2ViewModel)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                ViewBag.NewElement1 = editname;
+                ViewBag.NewElement2 = editSelect2ViewModel.NewElement2;
+                Bridgeelement = editSelect2ViewModel.NewElement2;
+                TheList.RemoveAll(x => x.Name == editname & x.Sidelength == editSelect2ViewModel.NewElement2);
+
+
+                return View("EditItem");
+            }
+
+            return Redirect("/Home/Error");
+
+        }
+
+
+        [HttpGet]
+        public IActionResult EditItem()
+        {
+            if (TheList.Count > 0)
+            {
+                EditItemViewModel editItemViewModel = new EditItemViewModel();
+
+                return View(editItemViewModel);
+            }
+
+            else
+            {
+                return Redirect("/");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult EditItem(EditItemViewModel editItemViewModel)
+
+        {
+            if (ModelState.IsValid)
+
+            {
+
+                if (editname == "Cube")
+                {
+
+                    Cube Cube = new Cube("Cube", editItemViewModel.NewElement2);
+                    TheList.Add(Cube);
+
+                }
+
+                if (editname == "Square")
+                {
+
+                    Square Square = new Square("Square", editItemViewModel.NewElement2);
+                    TheList.Add(Square);
+
+                }
+
+                if (editname == "Segment")
+                {
+
+                    Segment Segment = new Segment("Segment", editItemViewModel.NewElement2);
+                    TheList.Add(Segment);
+
+                }
+
+                return Redirect("/Home/Result");
+            }
+
+            if(editname == "Cube")
+            {
+
+                Cube Cube = new Cube("Cube", Bridgeelement);
+                TheList.Add(Cube);
+
+            }
+
+            if (editname == "Square")
+            {
+
+                Square Square = new Square("Square", Bridgeelement);
+                TheList.Add(Square);
+
+            }
+
+            if (editname == "Segment")
+            {
+
+                Segment Segment = new Segment("Segment", Bridgeelement);
+                TheList.Add(Segment);
+
             }
 
             return Redirect("/Home/Error");
