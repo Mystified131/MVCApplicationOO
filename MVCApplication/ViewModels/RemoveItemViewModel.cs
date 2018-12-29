@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace MVCApplication.ViewModels
 {
-    public class RemoveViewModel
+    public class RemoveItemViewModel
     {
         [Required]
-        public String NewElement1 { get; set; }
-        public List<Shape> TheList { get; set; }
+        public double NewElement2 { get; set; }
+        public List<Shape> Remlist { get; set; }
     }
 }

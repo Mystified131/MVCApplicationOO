@@ -13,8 +13,10 @@ namespace MVCApplication.Controllers
     public class HomeController : Controller
     {
         public static List<Shape> TheList = new List<Shape>();
+        public static List<Shape> Remlist = new List<Shape>();
         public static string Searchstr;
         public static string Bridgeelement;
+        public static string remname;
 
         public IActionResult Index()
         {
@@ -46,6 +48,7 @@ namespace MVCApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(resultViewModel.Shapetype == "Cube") { 
 
                 Cube Cube = new Cube("Cube", resultViewModel.Sidelength);
 
@@ -53,6 +56,29 @@ namespace MVCApplication.Controllers
                 resultViewModel.Surfacearea = Cube.Surfacearea(resultViewModel.Sidelength);
 
                 TheList.Add(Cube);
+
+                }
+
+                if (resultViewModel.Shapetype == "Square")
+                {
+
+                    Square Square = new Square("Square", resultViewModel.Sidelength);
+
+                    resultViewModel.Perimeter = Square.Perimeter(resultViewModel.Sidelength);
+                    resultViewModel.Area = Square.Area(resultViewModel.Sidelength);
+
+                    TheList.Add(Square);
+
+                }
+
+                if (resultViewModel.Shapetype == "Segment")
+                {
+
+                    Segment Segment = new Segment("Segment", resultViewModel.Sidelength);
+
+                    TheList.Add(Segment);
+
+                }
 
                 resultViewModel.Shapelist = TheList;
 
@@ -92,7 +118,53 @@ namespace MVCApplication.Controllers
             if (ModelState.IsValid)
             {
 
-                TheList.RemoveAll(x => x.Name == removeViewModel.NewElement1 & x.Sidelength == removeViewModel.NewElement2);
+                foreach(Shape item in TheList)
+                {
+                    if(item.Name == removeViewModel.NewElement1)
+                    {
+
+                        Remlist.Add(item);
+
+                    }
+          
+
+                }
+
+                remname = removeViewModel.NewElement1;
+
+                return Redirect("/Home/RemoveItem");
+            }
+
+            return Redirect("/Home/Error");
+
+        }
+
+        [HttpGet]
+        public IActionResult RemoveItem()
+        {
+            if (TheList.Count > 0)
+            {
+                RemoveItemViewModel removeItemViewModel = new RemoveItemViewModel();
+
+                removeItemViewModel.Remlist = Remlist;
+
+                return View(removeItemViewModel);
+            }
+
+            else
+            {
+                return Redirect("/");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult RemoveItem(RemoveItemViewModel removeItemViewModel)
+
+        {
+            if (ModelState.IsValid)
+            {
+
+                TheList.RemoveAll(x => x.Name == remname & x.Sidelength == removeItemViewModel.NewElement2);
 
                 return Redirect("/Home/Result");
             }
@@ -100,7 +172,6 @@ namespace MVCApplication.Controllers
             return Redirect("/Home/Error");
 
         }
-
 
         [HttpGet]
         public IActionResult SearchSelect()
@@ -182,7 +253,64 @@ namespace MVCApplication.Controllers
             {
                 SortViewModel sortViewModel = new SortViewModel();
 
-                List<Shape> Bridgelist = TheList.OrderBy(x => x.Sidelength).ToList();
+                List<Shape> Seglist = new List<Shape>();
+                List<Shape> Sqlist = new List<Shape>();
+                List<Shape> Cublist = new List<Shape>();
+
+                foreach (Shape item in TheList)
+                {
+                    if(item.Name == "Segment")
+                    {
+
+                        Seglist.Add(item);
+
+                    }
+
+                    if (item.Name == "Square")
+                    {
+
+                        Sqlist.Add(item);
+
+                    }
+
+                    if (item.Name == "Cube")
+                    {
+
+                        Cublist.Add(item);
+
+                    }
+
+
+                }
+
+                List<Shape> Seglisto = Seglist.OrderBy(x => x.Sidelength).ToList();
+                List<Shape> Sqlisto = Sqlist.OrderBy(x => x.Sidelength).ToList();
+                List<Shape> Cublisto = Cublist.OrderBy(x => x.Sidelength).ToList();
+
+                List<Shape> Bridgelist = new List<Shape>();
+
+                foreach (Shape item in Cublisto)
+                {
+
+                    Bridgelist.Add(item);
+
+                }
+
+                foreach (Shape item in Seglisto)
+                {
+
+                    Bridgelist.Add(item);
+
+                }
+
+                foreach (Shape item in Sqlisto)
+                {
+
+                    Bridgelist.Add(item);
+
+                }
+
+                
 
                 sortViewModel.Sortlist = Bridgelist;
 

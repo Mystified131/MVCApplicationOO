@@ -51,8 +51,24 @@ namespace MVCApplication.Models
 
 
         public Square(string Name, double Sidelength) : base(Name, Sidelength) { }
-      
 
+        public double Perimeter(double Sidelength)
+        {
+
+            double Per = Sidelength * 4;
+
+            return Per;
+
+        }
+
+        public double Area(double Sidelength)
+        {
+
+            double Are = Sidelength * Sidelength;
+
+            return Are;
+
+        }
     }
 
     public class Segment : Shape
