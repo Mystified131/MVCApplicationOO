@@ -1,0 +1,33 @@
+﻿@model MVCApplication.ViewModels.RemoveViewModel
+
+@{
+    ViewData["Title"] = "Remove";
+}
+
+<h2>Remove</h2>
+
+<div>
+    <form action='Remove' method='POST' align="left">
+        <label>
+            Which shape type would you like to delete from the list?
+        </label><br><br />
+        <select name="NewElement1">
+            @foreach (Shape item in Model.TheList)
+            {
+                <option value=@item.Name>@item.Name</option>}
+        </select>
+</div>
+<br /><br />
+<div>
+        <label>
+            Which attribute would you like to delete from the list?
+        </label><br><br />
+        <select name="NewElement2">
+            @foreach (Shape item in Model.TheList)
+            {
+                <option value=@item.Sidelength>@item.Sidelength</option>}
+        </select>
+</div>
+<br /><br />
+<input type="submit" value="Remove Item" />
+</form>
