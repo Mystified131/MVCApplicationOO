@@ -11,11 +11,11 @@
         <label>
             Which shape type would you like to delete from the list?
         </label><br><br />
-        <select name="NewElement1">
-            @foreach (Shape item in Model.TheList)
-            {
-                <option value=@item.Name>@item.Name</option>}
-        </select>
+                    <select name="NewElement1">                  
+                            <option value="Segment">Segment</option>
+                            <option value="Square">Square</option>}
+                        <option value="Cube">Cube</option>
+                    </select>
 </div>
 
 <br /><br />

@@ -117,6 +117,16 @@ namespace MVCApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+                List<string> Shapenames = new List<string>();
+
+                foreach(Shape item in TheList)
+                {
+
+                    Shapenames.Add(item.Name);
+
+                }
+
+                if (Shapenames.Contains(removeViewModel.NewElement1)) { 
 
                 foreach(Shape item in TheList)
                 {
@@ -133,6 +143,10 @@ namespace MVCApplication.Controllers
                 remname = removeViewModel.NewElement1;
 
                 return Redirect("/Home/RemoveItem");
+
+                }
+
+                return Redirect("/Home/Error");
             }
 
             return Redirect("/Home/Error");
