@@ -182,6 +182,8 @@ namespace MVCApplication.Controllers
 
                 TheList.RemoveAll(x => x.Name == remname & x.Sidelength == removeItemViewModel.NewElement2);
 
+                Remlist.Clear();
+
                 return Redirect("/Home/Result");
             }
 
@@ -283,7 +285,7 @@ namespace MVCApplication.Controllers
                 ViewBag.NewElement2 = editSelect2ViewModel.NewElement2;
                 Bridgeelement = editSelect2ViewModel.NewElement2;
                 TheList.RemoveAll(x => x.Name == editname & x.Sidelength == editSelect2ViewModel.NewElement2);
-
+                Editlist.Clear();
 
                 return View("EditItem");
             }
